@@ -1,2 +1,4 @@
-package PACKAGE_NAME;public class Review {
+public class Review {
+    private String tekst;
+    private double score;
 }
