@@ -13,6 +13,10 @@ public class Game {
         this.review = review;
     }
 
+    public void test() {
+        System.out.println("test");
+    }
+
     public double getPrijs() {
         return prijs;
     }
