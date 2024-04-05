@@ -1,26 +1,6 @@
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
-
-
-//try {
-//File file = new File("test.txt");
-//FileWriter writer = new FileWriter(file);
-//                    writer.write("test string");
-//                    writer.close();
-//FileReader reader = new FileReader(file);
-//int character;
-//                    while ((character = reader.read()) != -1) {
-//        System.out.print((char) character);
-//        }
-//        System.out.println("\n");
-//                    reader.close();
-//                }
-//                        catch (IOException e) {
-//        throw new RuntimeException(e);
-//                }
-/*Read and write example - delete later*/
 
 public class Menu {
 
@@ -46,31 +26,31 @@ public class Menu {
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input: ");
-        int page = scanner.nextInt();
+        int page = scanner.nextInt();   /*Reads and stores input*/
         System.out.println("\n" + line + "\n");
 
         try {
-            switch (page) {
+            switch (page) { /*Checks input*/
                 case 1:
                     try {
-                        FileReader reader = new FileReader(new ReadFiles().readGameListData());
+                        FileReader reader = new FileReader(new ReadFiles().readGameListData()); /*Creates new FileReader and create an anonymous Object that calls the readGameListData() method*/
                         int character;
                         int counter = 1;
                         boolean isNewLine = true;
 
-                        while ((character = reader.read()) != -1) {
-                            if (isNewLine) {
+                        while ((character = reader.read()) != -1) { /*Reads character in loop to check if the character is not -1 (-1 is end of file)*/
+                            if (isNewLine) {    /*If new line it prints the number before the text, increments the counter and sets isNewLine to false*/
                                 System.out.print(counter + ". ");
                                 counter++;
                                 isNewLine = false;
                             }
-                            System.out.print((char) character);
-                            if (character == '\n') {
+                            System.out.print((char) character); /*Prints out integer converted to character*/
+                            if (character == '\n') {    /*If end of line go to next line and set isNewLine to true*/
                                 isNewLine = true;
                             }
                         }
 
-                        reader.close();
+                        reader.close(); /*Close the reader (cant be reopened)*/
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -90,13 +70,13 @@ public class Menu {
                 case 6:
 
                     break;
-                default:
+                default:    /*If none of the cases are true it prints out default*/
                     System.out.println("Invalid number");
                     break;
 
             }
         }
-        finally {
+        finally {   /*Finally is always executed after the switch case is done*/
             System.out.println("\n\n" + line);
         }
     }

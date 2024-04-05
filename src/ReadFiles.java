@@ -6,7 +6,7 @@ public class ReadFiles {
     private File openvraagData;
     private File vervolgvraagData;
     private File antwoordData;
-    private File gameListData = new File("gamesList.txt");
+    private File gameListData;
     private ReadFiles reader;
 
     public ReadFiles() {
@@ -20,7 +20,8 @@ public class ReadFiles {
 //        this.reader = reader;
 //    }
 
-    public File readGameListData() {
+    public File readGameListData() { /*For now returns the File of the gameList but later can be modified to perform most of the code thats currently inside the switch case and just return the answer(s)*/
+        gameListData = new File("gamesList.txt"); /*Creates new file for the gamesList.txt*/
         return gameListData;
     }
     public File readReviewData() {
