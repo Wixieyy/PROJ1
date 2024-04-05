@@ -1,14 +1,18 @@
 import java.io.File;
 
-public class FileWriter {
+public class WriteFiles {
     private File reviewData;
     private File geslotenvraagData;
     private File openvraagData;
     private File vervolgvraagData;
     private File antwoordData;
-    private FileWriter writer;
+    private WriteFiles writer;
 
-    public FileWriter(File reviewData, File geslotenvraagData, File openvraagData, File vervolgvraagData, File antwoordData, FileWriter writer) {
+
+    public WriteFiles() {
+
+    }
+    public WriteFiles(File reviewData, File geslotenvraagData, File openvraagData, File vervolgvraagData, File antwoordData, WriteFiles writer) {
         this.reviewData = reviewData;
         this.geslotenvraagData = geslotenvraagData;
         this.openvraagData = openvraagData;
@@ -37,7 +41,7 @@ public class FileWriter {
         this.antwoordData = antwoordData;
     }
 
-    public void writeWriter(FileWriter writer) {
+    public void writeWriter(WriteFiles writer) {
         this.writer = writer;
     }
 }
