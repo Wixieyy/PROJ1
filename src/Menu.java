@@ -25,38 +25,23 @@ public class Menu {
 
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Input: ");
-        int page = scanner.nextInt();   /*Reads and stores input*/
+        System.out.print("\nInput: ");
+        int page = scanner.nextInt();   /*Stores input*/
+        scanner.nextLine(); /*Clears next line so next scanner input isn't skipped*/
         System.out.println("\n" + line + "\n");
 
         try {
             switch (page) { /*Checks input*/
-                case 1:
-                    try {
-                        FileReader reader = new FileReader(new ReadFiles().readGameListData()); /*Creates new FileReader and create an anonymous Object that calls the readGameListData() method*/
-                        int character;
-                        int counter = 1;
-                        boolean isNewLine = true;
-
-                        while ((character = reader.read()) != -1) { /*Reads character in loop to check if the character is not -1 (-1 is end of file)*/
-                            if (isNewLine) {    /*If new line it prints the number before the text, increments the counter and sets isNewLine to false*/
-                                System.out.print(counter + ". ");
-                                counter++;
-                                isNewLine = false;
-                            }
-                            System.out.print((char) character); /*Prints out integer converted to character*/
-                            if (character == '\n') {    /*If end of line go to next line and set isNewLine to true*/
-                                isNewLine = true;
-                            }
-                        }
-
-                        reader.close(); /*Close the reader (cant be reopened)*/
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                case 1: /*Ranglijst*/
+                    ReadFiles readFiles = new ReadFiles();
+                    System.out.println(readFiles.readGameListData());
                     break;
-                case 2:
-
+                case 2: /*Temporarily using to test WriteFiles class*/
+                    WriteFiles writeFiles = new WriteFiles();
+                    System.out.println("What game would you like to add?");
+                    String game = scanner.nextLine();
+                    writeFiles.writeGameData(game);
+                    System.out.printf("%s has been added to the list of games.",game);
                     break;
                 case 3:
 
@@ -77,7 +62,7 @@ public class Menu {
             }
         }
         finally {   /*Finally is always executed after the switch case is done*/
-            System.out.println("\n\n" + line);
+            System.out.println("\n" + line);
         }
     }
 }

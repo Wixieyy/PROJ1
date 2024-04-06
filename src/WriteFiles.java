@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class WriteFiles {
     private File reviewData;
@@ -6,6 +8,7 @@ public class WriteFiles {
     private File openvraagData;
     private File vervolgvraagData;
     private File antwoordData;
+    private File gameListData;
     private WriteFiles writer;
 
 
@@ -19,6 +22,19 @@ public class WriteFiles {
         this.vervolgvraagData = vervolgvraagData;
         this.antwoordData = antwoordData;
         this.writer = writer;
+    }
+
+    public void writeGameData (String game) {
+        try {
+            gameListData = new File("gamesList.txt");
+            FileWriter gameWriter = new FileWriter(gameListData, true);
+
+            gameWriter.write("\n" + game);
+            gameWriter.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void writeReviewData(File reviewData) {
