@@ -26,10 +26,10 @@ public class WriteFiles {
 
     public void writeGameData (String game) {
         try {
-            gameListData = new File("gamesList.txt");
-            FileWriter gameWriter = new FileWriter(gameListData, true);
+            gameListData = new File("gamesList.txt");   /*new File for gamesList.txt*/
+            FileWriter gameWriter = new FileWriter(gameListData, true); /*Creates a writer that writes to gamesList.txt and allows appending (otherwise all data will be overwritten each time it is used.)*/
 
-            gameWriter.write("\n" + game);
+            gameWriter.write("\n" + game);  /*Goes to next line before storing input*/
             gameWriter.close();
         }
         catch (IOException e) {
