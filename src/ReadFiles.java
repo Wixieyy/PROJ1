@@ -1,6 +1,9 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReadFiles {
     private File reviewData;
@@ -9,67 +12,135 @@ public class ReadFiles {
     private File vervolgvraagData;
     private File antwoordData;
     private File gameListData;
-    private ReadFiles reader;
+    private File vragenList;
 
     public ReadFiles() {
     }
-//    public FileReader(File reviewData, File geslotenvraagData, File openvraagData, File vervolgvraagData, File antwoordData, FileReader reader) {
-//        this.reviewData = reviewData;
-//        this.geslotenvraagData = geslotenvraagData;
-//        this.openvraagData = openvraagData;
-//        this.vervolgvraagData = vervolgvraagData;
-//        this.antwoordData = antwoordData;
-//        this.reader = reader;
-//    }
 
-    public String readGameListData() { /*For now returns the File of the gameList but later can be modified to perform most of the code thats currently inside the switch case and just return the answer(s)*/
-        StringBuilder builder = new StringBuilder(); /*Empty String that you can append text to*/
-        try {
-            gameListData = new File("gamesList.txt"); /*Creates new file for the gamesList.txt*/
-            FileReader reader = new FileReader(gameListData);
-            int character;
-            int counter = 1;
-            boolean isNewLine = true;
+    public ReadFiles(File reviewData, File geslotenvraagData, File openvraagData, File vervolgvraagData, File antwoordData, FileReader reader, File vragenList) {
+        this.reviewData = reviewData;
+        this.geslotenvraagData = geslotenvraagData;
+        this.openvraagData = openvraagData;
+        this.vervolgvraagData = vervolgvraagData;
+        this.antwoordData = antwoordData;
+        this.vragenList = vragenList;
+    }
 
-            while ((character = reader.read()) != -1) { /*Reads character in loop to check if the character is not -1 (-1 is end of file)*/
-                if (isNewLine) {    /*If new line it prints the number before the text, increments the counter and sets isNewLine to false*/
-                    builder.append(counter + ". ");
-                    counter++;
-                    isNewLine = false;
-                }
-                builder.append((char) character); /*Prints out integer converted to character*/
-                if (character == '\n') {    /*If end of line go to next line and set isNewLine to true*/
-                    isNewLine = true;
-                }
+    public String[] readGameListData() {
+        String filePath = "gamesList.csv";
+
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
             }
-
-            reader.close(); /*Close the reader (cant be reopened)*/
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return builder.toString();
-    }
-    public File readReviewData() {
-        return reviewData;
+
+        String[] linesArray = lines.toArray(new String[0]);
+        return linesArray;
     }
 
-    public File readGeslotenvraagData() {
-        return geslotenvraagData;
+
+    public String[] readVragenlijst() {
+        String filePath = "vragenList.csv";
+
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String[] linesArray = lines.toArray(new String[0]);
+        return linesArray;
     }
 
-    public File readOpenvraagData() {
-        return openvraagData;
+//    public FileReader(FileWriter writeFiles) {
+//    }
+//
+//    public FileReader(String filePath) {
+//
+//    }
+
+    // Method to read closed questions from CSV file
+    public List<GeslotenVraag> readGeslotenVragen() {
+        List<GeslotenVraag> geslotenVragen = new ArrayList<>();
+        String filePath = "GeslotenVragen.csv";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                String vraag = data[0];
+                String[] opties = new String[data.length - 1];
+                System.arraycopy(data, 1, opties, 0, data.length - 1);
+                String antwoord = data[data.length - 1];
+                geslotenVragen.add(new GeslotenVraag(vraag, opties, antwoord));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return geslotenVragen;
     }
 
-    public File readVervolgvraagData() {
-        return vervolgvraagData;
+    // Method to read open questions from CSV file
+    public List<OpenVraag> readOpenVragen() {
+        List<OpenVraag> openVragen = new ArrayList<>();
+        String filePath = "OpenVragen.csv";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                String vraag = data[0];
+                String antwoord = data[1];
+                openVragen.add(new OpenVraag(vraag, antwoord));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return openVragen;
     }
 
-    public File readAntwoordData() {
-        return antwoordData;
+    // Method to read follow-up questions from CSV file
+    public List<VervolgVraag> readVervolgVragen() {
+        List<VervolgVraag> vervolgVragen = new ArrayList<>();
+        String filePath = "VervolgVragen.csv";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                String vraag = data[0];
+                String antwoord = data[1];
+                vervolgVragen.add(new VervolgVraag(vraag, antwoord));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return vervolgVragen;
     }
 
-    public ReadFiles readReader() {
-        return reader;
+
+    public int read(char[] cbuf, int off, int len) throws IOException {
+        return 0;
     }
+
+
+    public void close() throws IOException {
+
+    }
+
+
 }

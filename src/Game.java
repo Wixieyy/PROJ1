@@ -1,11 +1,15 @@
+import java.util.ArrayList;
+
 public class Game {
+    protected ArrayList<String> games;
     private double prijs;
     private String naam;
     private String genre;
     private double score;
     private String review;
 
-    public Game(double prijs, String naam, String genre, double score, String review) {
+    public Game(ArrayList<String> games, double prijs, String naam, String genre, double score, String review) {
+        this.games = games;
         this.prijs = prijs;
         this.naam = naam;
         this.genre = genre;
@@ -13,8 +17,13 @@ public class Game {
         this.review = review;
     }
 
-    public void test() {
-        System.out.println("test");
+    public Game(String naam, ArrayList<String> games) {
+        this.naam = naam;
+        this.games= games;
+    }
+
+    public Game() {
+
     }
 
     public double getPrijs() {
