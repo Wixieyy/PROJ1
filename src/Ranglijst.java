@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class Ranglijst extends Game {
+public class Ranglijst extends Menu {
     private int positie;
     private double score;
     private double prijs;
@@ -49,45 +49,43 @@ public class Ranglijst extends Game {
     }
 
 
-    public ArrayList<String> showRanglijst() {
-        String csvFile = "gamesList.csv"; // Replace this with the path to your CSV file
+    public ArrayList<String[]> showRanglijst() {
+        String csvFile = "gamesList.csv";
         String line;
-        String csvSplitBy = ","; // Assuming comma-separated values
-        ArrayList<String> names = new ArrayList<>();
+        String csvSplitBy = ",";
+        ArrayList<String[]> data = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             while ((line = br.readLine()) != null) {
-                // Split the line by the comma to get individual fields
                 String[] fields = line.split(csvSplitBy);
-                // Add the name (index 0) to the list
-                names.add(fields[0].trim().replaceAll("^\"|\"$", ""));
+                String[] rowData = new String[2];
+                rowData[0] = fields[0].trim().replaceAll("^\"|\"$", "");
+                rowData[1] = fields[1].trim().replaceAll("^\"|\"$", "");
+                data.add(rowData);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Print out all the names
-        for (String name : names) {
-            System.out.println(name);
+        for (String[] row : data) {
+            System.out.println(row[0] + ", " + row[1] + " euro");
         }
 
-        return names;
+        return data;
     }
 
     public void sortRanglijst() {
-        String csvFile = "gamesList.csv"; // Replace this with the path to your CSV file
+        String csvFile = "gamesList.csv";
         String line;
-        String csvSplitBy = ","; // Assuming comma-separated values
+        String csvSplitBy = ",";
 
         List<ArrayList<String>> allFields = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             while ((line = br.readLine()) != null) {
-                // Split the line by the comma to get individual fields
                 String[] splitFields = line.split(csvSplitBy);
                 ArrayList<String> fields = new ArrayList<>();
                 for (String field : splitFields) {
-                    // Remove leading and trailing whitespace and quotes
                     fields.add(field.trim().replaceAll("^\"|\"$", ""));
                 }
                 allFields.add(fields);
@@ -96,38 +94,32 @@ public class Ranglijst extends Game {
             e.printStackTrace();
         }
 
-        // Sort allFields based on the value of fields.get(2) in descending order
         allFields.sort((fields1, fields2) -> {
-            // Extract the value of fields.get(2) as a double
             double value1 = 0.0;
             double value2 = 0.0;
             try {
                 value1 = Double.parseDouble(fields1.get(2).replaceAll("[^0-9.]", ""));
                 value2 = Double.parseDouble(fields2.get(2).replaceAll("[^0-9.]", ""));
             } catch (NumberFormatException ignored) {
-                // Handle cases where the value cannot be parsed as a double
             }
-            return Double.compare(value2, value1); // Compare in descending order
+            return Double.compare(value2, value1);
         });
 
-        // Print sorted fields
         for (ArrayList<String> fields : allFields) {
-            System.out.println(fields.get(0));
+            System.out.println(fields.get(0) + ", " + fields.get(1) + " euro");
         }
     }
 
     public void avgScoreRanglijst() {
-        String csvFile = "gamesList.csv"; // Replace this with the path to your CSV file
+        String csvFile = "gamesList.csv";
         String line;
-        String csvSplitBy = ","; // Assuming comma-separated values
+        String csvSplitBy = ",";
 
         List<Double> scores = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             while ((line = br.readLine()) != null) {
-                // Split the line by the comma to get individual fields
                 String[] splitFields = line.split(csvSplitBy);
-                // Extract the score from the third field and convert it to a double
                 double score = Double.parseDouble(splitFields[2].trim().replaceAll("[^0-9.]", ""));
                 scores.add(score);
             }
@@ -135,13 +127,11 @@ public class Ranglijst extends Game {
             e.printStackTrace();
         }
 
-        // Calculate the sum of all scores
         double sum = 0.0;
         for (double score : scores) {
             sum += score;
         }
 
-        // Calculate the average score
         double average = sum / scores.size();
 
         System.out.println("Average Score: " + average);
@@ -154,10 +144,8 @@ public class Ranglijst extends Game {
 
             try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
                 while ((line = br.readLine()) != null) {
-                    // Split the line by the comma to get individual fields
                     ArrayList<String> fields = new ArrayList<>(List.of(line.split(csvSplitBy)));
-                    // Add game name to the list
-                    games.add(fields.get(0).substring(1)); // Remove leading whitespace
+                    games.add(fields.get(0).substring(1));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

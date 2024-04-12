@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Game {
+public class Game extends Ranglijst {
     protected ArrayList<String> games;
     private double prijs;
     private String naam;

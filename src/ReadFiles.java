@@ -70,7 +70,6 @@ public class ReadFiles {
 //
 //    }
 
-    // Method to read closed questions from CSV file
     public List<GeslotenVraag> readGeslotenVragen() {
         List<GeslotenVraag> geslotenVragen = new ArrayList<>();
         String filePath = "GeslotenVragen.csv";
@@ -92,7 +91,6 @@ public class ReadFiles {
         return geslotenVragen;
     }
 
-    // Method to read open questions from CSV file
     public List<OpenVraag> readOpenVragen() {
         List<OpenVraag> openVragen = new ArrayList<>();
         String filePath = "OpenVragen.csv";
@@ -112,7 +110,6 @@ public class ReadFiles {
         return openVragen;
     }
 
-    // Method to read follow-up questions from CSV file
     public List<VervolgVraag> readVervolgVragen() {
         List<VervolgVraag> vervolgVragen = new ArrayList<>();
         String filePath = "VervolgVragen.csv";

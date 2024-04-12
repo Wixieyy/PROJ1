@@ -24,6 +24,9 @@ public class WriteFiles {
         this.writer = writer;
     }
 
+    public static void writeReviewsData(String s, String reviews) {
+    }
+
     public void writeGameData (String game) {
         try {
             gameListData = new File("gamesList.txt");   /*new File for gamesList.txt*/
