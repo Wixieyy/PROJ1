@@ -63,12 +63,23 @@ public class ReadFiles {
         return linesArray;
     }
 
-//    public FileReader(FileWriter writeFiles) {
-//    }
-//
-//    public FileReader(String filePath) {
-//
-//    }
+
+    public static List<String> readReviews() {
+        String filePath = "Reviews.csv";
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lines;
+    }
+
 
     public List<GeslotenVraag> readGeslotenVragen() {
         List<GeslotenVraag> geslotenVragen = new ArrayList<>();

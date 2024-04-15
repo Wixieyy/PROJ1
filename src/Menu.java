@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -61,13 +64,28 @@ class Menu {
                         EnqueteVraag enqueteVraag = new EnqueteVraag();
                         enqueteVraag.conductSurvey(random, scanner, questions);
                         break;
+                    case 4:
+                    readReviews();
+
+                        break;
                 }
             } finally {
                 System.out.println("\n" + linebar);
             }
         }
     }
-
+    private void readReviews() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("reviews.csv"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line); // Print each line of the reviews
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public Menu(ArrayList<String> games) {
     }
 }
