@@ -65,7 +65,7 @@ class Ranglijst extends Menu {
             try {
                 while((line = br.readLine()) != null) {
                     ArrayList<String> fields = new ArrayList(List.of(line.split(csvSplitBy)));
-                    games.add(((String)fields.get(0)).substring(1));
+                    games.add(((String)fields.get(0)).substring(1, fields.get(0).length() - 1));
                 }
             } catch (Throwable var9) {
                 try {

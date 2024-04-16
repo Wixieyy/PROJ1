@@ -8,10 +8,12 @@ public class Review extends Game {
     private String tekst;
     private double score;
 
-    public Review(String tekst, double score) {
+    public Review(String tekst, double score, String game) {
         super(null, 0.0, null, null, 0.0, null);
         this.tekst = tekst;
         this.score = score;
+        this.setNaam(game);
+
     }
 
     public Review() {
@@ -22,21 +24,11 @@ public class Review extends Game {
         return tekst;
     }
 
-    public void setTekst(String tekst) {
-        this.tekst = tekst;
-    }
-
     public double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-
-    public void addReview(Scanner scanner) {
-        scanner.nextLine();
+    public void addReview(Scanner scanner, String selectedGame) {
         System.out.println("Geef de game een score (1-5):");
         double score  = scanner.nextDouble();
         scanner.nextLine();
@@ -45,16 +37,18 @@ public class Review extends Game {
         String choice = scanner.nextLine();
 
 
-        if (choice.equalsIgnoreCase("Y")) {
+        if (choice.equalsIgnoreCase("J")) {
             System.out.println("Voeg je opmerking toe:");
             tekst = scanner.nextLine();
-        } else {
-            tekst = null;
+        }
+
+        else if (choice.equalsIgnoreCase("N")) {
+            tekst = "Geen opmerking";
         }
 
         try (FileWriter writer = new FileWriter("Reviews.csv", true)) {
-            writer.write(score + "," + tekst + "\n");
-            System.out.println("Review added: Score: " + score + ", Comment: " + tekst);
+            writer.write(selectedGame + "," + score + "," + tekst + "\n");
+            System.out.println("Review added: " + selectedGame + "Score: " + score + ", Comment: " + tekst);
         } catch (IOException e) {
             e.printStackTrace();
         }

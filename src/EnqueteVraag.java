@@ -1,33 +1,24 @@
 import java.io.*;
 import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class EnqueteVraag {
     private String vraag;
     private String antwoord;
 
+    public EnqueteVraag() {}
     public EnqueteVraag(String vraag, String antwoord) {
         this.vraag = vraag;
         this.antwoord = antwoord;
     }
 
-    public EnqueteVraag() {
-        // Initialize an empty list to hold questions
-        List<String> questions = new ArrayList<>();
-        try {
-            // Read questions from CSV file
-            questions = readQuestionsFromCSV("vragenList.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Conduct survey using the retrieved questions
-        conductSurvey(new Random(), new Scanner(System.in), questions);
+    public void voerEnqueteUit() {
+        OpenGeslotenVraag.geslotenVragen();
     }
 
-    private List<String> readQuestionsFromCSV(String filename) throws IOException {
+
+
+    public static List<String> readQuestionsFromCSV(String filename) throws IOException {
         List<String> questions = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -36,40 +27,6 @@ public class EnqueteVraag {
             }
         }
         return questions;
-    }
-
-    public void conductSurvey(Random random, Scanner scanner, List<String> questions) {
-        try (FileWriter writer = new FileWriter(new File("Reviews.csv"))) {
-            for (String vraag : questions) {
-                System.out.println("Question: " + vraag);
-                String antwoord = scanner.nextLine();
-                // Write the question and the answer to the CSV file
-                writer.write(vraag + "," + antwoord);
-                writer.append('\n');
-                writer.flush(); // Flush the buffer to ensure the content is written to the file immediately
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            scanner.close();
-        }
-    }
-
-    // Getters and setters
-    public String getVraag() {
-        return vraag;
-    }
-
-    public void setVraag(String vraag) {
-        this.vraag = vraag;
-    }
-
-    public String getAntwoord() {
-        return antwoord;
-    }
-
-    public void setAntwoord(String antwoord) {
-        this.antwoord = antwoord;
     }
 }
 
